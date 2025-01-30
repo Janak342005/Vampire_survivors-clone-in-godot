@@ -1,0 +1,61 @@
+[gd_scene load_steps=8 format=3 uid="uid://4ojolcd4taf3"]
+
+[ext_resource type="Script" path="res://player.gd" id="1_84mod"]
+[ext_resource type="PackedScene" uid="uid://pbmyh1qru7p" path="res://characters/happy_boo/happy_boo.tscn" id="2_y1et3"]
+[ext_resource type="PackedScene" uid="uid://dyxuqfy3ytjvg" path="res://gun.tscn" id="3_o6qbf"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_3epaj"]
+radius = 59.0
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_3irqn"]
+radius = 57.0351
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_otp5o"]
+bg_color = Color(0.154876, 0.154876, 0.154876, 1)
+corner_radius_top_left = 8
+corner_radius_top_right = 8
+corner_radius_bottom_right = 8
+corner_radius_bottom_left = 8
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_8l850"]
+bg_color = Color(0.353979, 0.686234, 0.413282, 1)
+corner_radius_top_left = 8
+corner_radius_top_right = 8
+corner_radius_bottom_right = 8
+corner_radius_bottom_left = 8
+
+[node name="Player" type="CharacterBody2D"]
+script = ExtResource("1_84mod")
+
+[node name="HappyBoo" parent="." instance=ExtResource("2_y1et3")]
+position = Vector2(0, 24)
+
+[node name="Gun" parent="." instance=ExtResource("3_o6qbf")]
+position = Vector2(5, 20)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(-6, -17)
+shape = SubResource("CircleShape2D_3epaj")
+
+[node name="HurtBox" type="Area2D" parent="."]
+unique_name_in_owner = true
+collision_mask = 2
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="HurtBox"]
+position = Vector2(-6, -17)
+shape = SubResource("CircleShape2D_3irqn")
+debug_color = Color(0.902191, 0.222292, 0.544388, 0.42)
+
+[node name="ProgressBar" type="ProgressBar" parent="."]
+unique_name_in_owner = true
+z_index = 1
+offset_left = -136.0
+offset_top = -114.0
+offset_right = 123.0
+offset_bottom = -87.0
+theme_override_styles/background = SubResource("StyleBoxFlat_otp5o")
+theme_override_styles/fill = SubResource("StyleBoxFlat_8l850")
+value = 100.0
+show_percentage = false
+
+[node name="Camera2D" type="Camera2D" parent="."]

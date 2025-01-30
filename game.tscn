@@ -1,0 +1,88 @@
+[gd_scene load_steps=4 format=3 uid="uid://yeumyx2yemuo"]
+
+[ext_resource type="Script" path="res://game.gd" id="1_d3011"]
+[ext_resource type="PackedScene" uid="uid://4ojolcd4taf3" path="res://player.tscn" id="1_ttcfd"]
+
+[sub_resource type="Curve2D" id="Curve2D_twfrm"]
+_data = {
+"points": PackedVector2Array(0, 0, 0, 0, 84, 52, 0, 0, 0, 0, 1134.98, 54.9549, 0, 0, 0, 0, 1140.84, 338.818, 0, 0, 0, 0, 1131.83, 575.416, 0, 0, 0, 0, 84, 574, 0, 0, 0, 0, 78.4566, 316.995, 0, 0, 0, 0, 84, 55)
+}
+point_count = 7
+
+[node name="Game" type="Node2D"]
+script = ExtResource("1_d3011")
+
+[node name="CanvasLayer" type="CanvasLayer" parent="."]
+layer = -30
+
+[node name="ColorRect" type="ColorRect" parent="CanvasLayer"]
+offset_left = -64.0
+offset_top = -35.0
+offset_right = 1222.0
+offset_bottom = 731.0
+color = Color(0.796889, 0.798899, 0.775564, 1)
+
+[node name="Player" parent="." instance=ExtResource("1_ttcfd")]
+position = Vector2(568, 308)
+rotation = 0.00960767
+
+[node name="Path2D" type="Path2D" parent="Player"]
+position = Vector2(-984.758, -490.561)
+rotation = -0.00960767
+scale = Vector2(1.57283, 1.70386)
+curve = SubResource("Curve2D_twfrm")
+
+[node name="spwan_point" type="PathFollow2D" parent="Player/Path2D"]
+unique_name_in_owner = true
+position = Vector2(84, 52)
+rotation = 0.00281156
+
+[node name="Timer" type="Timer" parent="."]
+wait_time = 0.3
+autostart = true
+
+[node name="Game_over" type="CanvasLayer" parent="."]
+unique_name_in_owner = true
+visible = false
+
+[node name="ColorRect" type="ColorRect" parent="Game_over"]
+unique_name_in_owner = true
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0, 0, 0, 0.345098)
+
+[node name="Label" type="Label" parent="Game_over/ColorRect"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -274.0
+offset_top = -69.0
+offset_right = 274.0
+offset_bottom = 69.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_font_sizes/font_size = 101
+text = "Game Over"
+
+[node name="Survival_Time" type="Label" parent="Game_over/ColorRect"]
+unique_name_in_owner = true
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -38.0
+offset_right = 38.0
+offset_bottom = 23.0
+grow_horizontal = 2
+theme_override_font_sizes/font_size = 66
+text = "
+"
+
+[connection signal="game_over" from="Player" to="." method="_on_player_game_over"]
+[connection signal="timeout" from="Timer" to="." method="_on_timer_timeout"]
